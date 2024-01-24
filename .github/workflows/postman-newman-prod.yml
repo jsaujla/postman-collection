@@ -1,4 +1,4 @@
-name: Postman Newman CI Tests
+name: Postman Newman CI Tests | PROD
 
 # Controls when the workflow will run
 on:
@@ -28,7 +28,7 @@ jobs:
         npm install -g newman-reporter-htmlextra
 
     - name: Run Postman tests
-      run: newman run "GoREST Test Collection.postman_collection.json" -e "PROD.postman_environment.json" -r cli,htmlextra --reporter-htmlextra-export test-artifacts/result-report.html
+      run: newman run "GoREST Test Collection.postman_collection.json" -e "env/PROD.postman_environment.json" -r cli,htmlextra --reporter-htmlextra-export test-artifacts/result-report.html
     - uses: actions/upload-artifact@v3
       if: always()
       with:

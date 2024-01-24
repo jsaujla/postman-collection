@@ -1,1 +1,1 @@
-newman run "GoREST Test Collection.postman_collection.json" -e "PROD.postman_environment.json" -r cli,htmlextra --delay-request 500
+newman run "GoREST Test Collection.postman_collection.json" -e "env/PROD.postman_environment.json" -r cli,htmlextra --delay-request 500
