@@ -8,7 +8,7 @@
 [![Postman Newman CI Tests](https://github.com/jsaujla/postman-collection/actions/workflows/postman-newman.yml/badge.svg?branch=main)](https://github.com/jsaujla/postman-collection/actions/workflows/postman-newman.yml)  
 
 * Access postman newman result report online  
-  https://jsaujla.github.io/postman-collection/test-artifacts/result-report.html
+  https://jsaujla.github.io/postman-collection/result-report.html
 
 ## Local setup ##
 
