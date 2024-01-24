@@ -1,0 +1,1 @@
+newman run "GoREST Test Collection.postman_collection.json" -e "PROD.postman_environment.json" -r cli,htmlextra --reporter-htmlextra-export test-artifacts/htmlreport.html

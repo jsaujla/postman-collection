@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "3f3cc6f8-fe48-4ba8-a113-b88aaf604367",
+		"name": "GoREST Test Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32182428",
+		"_collection_link": "https://galactic-shuttle-485999.postman.co/workspace/Jaspalaujla-Workspace~bc779771-3165-4f89-8934-67f26cdc8266/collection/32182428-3f3cc6f8-fe48-4ba8-a113-b88aaf604367?action=share&source=collection_link&creator=32182428"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const uniqueEmailToCreateUser = pm.variables.get(\"uniqueEmailToCreateUser\");\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.collectionVariables.set(\"userIdFromCreateUser\", jsonData.id);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Test data type of the response is an object\", function () {\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Under response boby, the value of id, name, email, gender and status is valid\", function () {\r",
+									"    pm.expect(jsonData.id).to.match(/^[0-9]{7}$/);\r",
+									"    pm.expect(jsonData.name).to.eql(\"Tester\");\r",
+									"    pm.expect(jsonData.email).to.eq(uniqueEmailToCreateUser);\r",
+									"    pm.expect(jsonData.gender).to.eq(\"male\");\r",
+									"    pm.expect(jsonData.status).to.eq(\"active\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"var schema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"id\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    },\r",
+									"    \"name\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"email\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"gender\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"id\",\r",
+									"    \"name\",\r",
+									"    \"email\",\r",
+									"    \"gender\",\r",
+									"    \"status\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"pm.test('Schema is valid', function() {\r",
+									"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment = require('moment');\r",
+									"const currentDateAndTime = moment().format(\"YYYYMMDDhhmms\");;\r",
+									"pm.collectionVariables.set(\"currentDateAndTime\", currentDateAndTime);\r",
+									"console.log(\"Users - Create User - currentDateAndTime is \" + moment().format(\"YYYYMMDDhhmms\"));\r",
+									"\r",
+									"pm.collectionVariables.set(\"uniqueEmailToCreateUser\", \"test\" + currentDateAndTime + \"@test.test\");\r",
+									"\r",
+									"// const random = Math.random().toString(36).substring(2);\r",
+									"// let uniqueEmail = \"test\" + random + \"@test.com\";\r",
+									"// let uniqueName= \"Test\" + random;\r",
+									"\r",
+									"// pm.collectionVariables.set(\"uniqueEmail\", uniqueEmail);\r",
+									"// pm.collectionVariables.set(\"uniqueName\", uniqueName);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer b88a60940dc190cabd4d2fc83f0035779e965ab92f7195f46725997c4b3ed1cd",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tester\",\r\n    \"email\": \"{{uniqueEmailToCreateUser}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const uniqueEmailToCreateUser = pm.variables.get(\"uniqueEmailToCreateUser\");\r",
+									"const userIdFromCreateUser = pm.variables.get(\"userIdFromCreateUser\");\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Test data type of the response is an object\", function () {\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Under response boby, the value of id, name, email, gender and status is valid\", function () {\r",
+									"    pm.expect(jsonData.id).to.eql(userIdFromCreateUser);\r",
+									"    pm.expect(jsonData.name).to.eql(\"Tester\");\r",
+									"    pm.expect(jsonData.email).to.eq(uniqueEmailToCreateUser);\r",
+									"    pm.expect(jsonData.gender).to.eq(\"male\");\r",
+									"    pm.expect(jsonData.status).to.eq(\"active\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users/{{userIdFromCreateUser}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"{{userIdFromCreateUser}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"var userIdFromCreateUser = pm.variables.get(\"userIdFromCreateUser\");\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Test data type of the response is an object\", function () {\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Under response boby, the values of name and gender updated\", function () {\r",
+									"    pm.expect(jsonData.id).to.eql(userIdFromCreateUser);\r",
+									"    pm.expect(jsonData.name).to.eql(\"Updated Tester\");\r",
+									"    pm.expect(jsonData.gender).to.eql(\"female\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer b88a60940dc190cabd4d2fc83f0035779e965ab92f7195f46725997c4b3ed1cd",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Updated Tester\",\r\n    \"email\": \"Test20240110112954@test.test\",\r\n    \"gender\": \"female\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users/{{userIdFromCreateUser}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"{{userIdFromCreateUser}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users/{{userIdFromCreateUser}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"{{userIdFromCreateUser}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "userIdFromCreateUser",
+			"value": ""
+		},
+		{
+			"key": "currentDateAndTime",
+			"value": ""
+		},
+		{
+			"key": "uniqueEmail",
+			"value": ""
+		},
+		{
+			"key": "uniqueName",
+			"value": ""
+		},
+		{
+			"key": "uniqueEmailToCreateUser",
+			"value": ""
+		}
+	]
+}
