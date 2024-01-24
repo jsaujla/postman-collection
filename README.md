@@ -7,8 +7,8 @@
 ### GitHub Actions (CI) test execution result ###
 [![Postman Newman CI Tests](https://github.com/jsaujla/postman-collection/actions/workflows/postman-newman.yml/badge.svg?branch=main)](https://github.com/jsaujla/postman-collection/actions/workflows/postman-newman.yml)  
 
-* Access playwright result report online  
-  https://jsaujla.github.io/postman-collection/
+* Access postman newman result report online  
+  https://jsaujla.github.io/postman-collection/test-artifacts/result-report.html
 
 ## Local setup ##
 
