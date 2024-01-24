@@ -5,7 +5,7 @@
 * The website under test is 'gorest'
 
 ### GitHub Actions (CI) test execution result ###
-[![CI with Postman Newman](https://github.com/jsaujla/postman-collection/actions/workflows/postman-newman.yml/badge.svg?branch=main)](https://github.com/jsaujla/postman-collection/actions/workflows/postman-newman.yml)  
+[![Postman Newman CI Tests](https://github.com/jsaujla/postman-collection/actions/workflows/postman-newman.yml/badge.svg?branch=main)](https://github.com/jsaujla/postman-collection/actions/workflows/postman-newman.yml)  
 
 * Access playwright result report online  
   https://jsaujla.github.io/postman-collection/
